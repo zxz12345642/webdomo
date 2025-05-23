@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>键盘移动图片</title> 
+</head> 
+<body> 
+    <img src="./新建文件夹/rk.jpeg" alt="" id="moveableImage" style="position: absolute;left:50px;top: 10px;"> 
+    <script> 
+        const a = document.getElementById('moveableImage'); 
+        a.setAttribute("draggable",false);
+        document.addEventListener('keydown', function (event) { 
+            const step = 10;
+            let newX = parseInt(a.style.left,10); 
+            let newY = parseInt(a.style.top,10); 
+            var key=event.keyCode; 
+            switch (event.key) { 
+                case 'ArrowLeft':
+                    newX -= step; 
+                    break; 
+                case 'ArrowRight':
+                    newX += step; 
+                    break; 
+                case 'ArrowUp':
+                    newY -= step; 
+                    break; 
+                case 'ArrowDown':
+                    newY += step; 
+                    break; 
+                default: 
+                    return;
+            }
+            a.style.left=newX+"px";
+            a.style.top=newY+"px";
+        }); 
+        var pan=false;
+        var dx=0;
+        var dy=0;
+        document.addEventListener("mousedown",function(e){
+            var x=e.clientX;
+            var y=e.clientY;
+            var l=parseInt(a.style.left,10);
+            var t=parseInt(a.style.top,10);
+            dx=x-l;
+            dy=y-t;
+            if(dx>0&&dx<155&&dy>0&&dy<230){
+                pan=true;
+            }
+        });
+        document.addEventListener("mouseup",function(e){
+            pan=false;
+        });
+        document.addEventListener("mousemove",function(e){
+            if(pan==true){
+                a.style.left=(e.clientX-dx)+"px";
+                a.style.top=(e.clientY-dy)+"px";
+            }
+        });
+    </script> 
+</body> 
+</html> 
