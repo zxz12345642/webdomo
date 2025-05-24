@@ -5,6 +5,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-安徽大学
+	<h3>注册成功！</h3>
+	<p>
+		手机号: <span id="phone"></span>
+	</p>
+	<p>
+		用户名: <span id="username"></span>
+	</p>
+	<p>
+		密码：<span id="password"></span>
+	</p>
+	<a href="index.html">返回注册</a>
+	<script>
+		const params = new URLSearchParams(window.location.search);
+		document.getElementById("phone").textContent =params.get('phone');
+		document.getElementById('username').textContent = params.get('username');
+		document.getElementById('password').textContent = params.get('password');
+	</script>
 </body>
 </html>

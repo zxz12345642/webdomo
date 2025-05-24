@@ -1,11 +1,16 @@
 
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import jdbc.Jdbc;
 
 
 @WebServlet("/RegServlet")
@@ -24,7 +29,18 @@ public class RegServlet extends HttpServlet {
 		String tell=request.getParameter("userTell");
 		String name=request.getParameter("userName");
 		String password=request.getParameter("password");
-		System.out.println("ÊÖ»ú£º"+tell+"ÐÕÃû£º"+name+"ÃÜÂë£º"+password);
+		Jdbc jdbc=new Jdbc();
+		try {
+			jdbc.DBconnect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			jdbc.add(tell, name, password);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect("webdemo.html?phone="+URLEncoder.encode(tell, "UTF-8") +  "&username=" + URLEncoder.encode(name, "UTF-8")+"&password="+URLEncoder.encode(password,"UTF-8"));
 	}
 
 }
